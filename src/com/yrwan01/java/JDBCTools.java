@@ -16,8 +16,7 @@ import java.util.Properties;
 public class JDBCTools {
 
 	/**
-	 * @param sql
-	 *            待执行的SQL语句
+	 * @param sql 待执行的SQL语句
 	 * @throws Exception
 	 */
 	public void update(String sql) {
