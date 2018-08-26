@@ -3,6 +3,7 @@ package com.yrwan01.java;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
@@ -15,7 +16,8 @@ import java.util.Properties;
 public class JDBCTools {
 
 	/**
-	 * @param sql ´ýÖ´ÐÐµÄSQLÓï¾ä
+	 * @param sql
+	 *            ´ýÖ´ÐÐµÄSQLÓï¾ä
 	 * @throws Exception
 	 */
 	public void update(String sql) {
@@ -29,6 +31,35 @@ public class JDBCTools {
 			e.printStackTrace();
 		} finally {
 			JDBCTools.release(con, s);
+		}
+	}
+
+	/**
+	 * @param rs
+	 * @param con
+	 * @param s
+	 */
+	public static void release(ResultSet rs, Connection con, Statement s) {
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (s != null) {
+			try {
+				s.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
