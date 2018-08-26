@@ -9,7 +9,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-public class testJDBC {
+public class TestJDBC {
 	@Test
 	public void testJdbc() {
 		String driver = "oracle.jdbc.OracleDriver"; // Çý¶¯±êÊ¶·û
