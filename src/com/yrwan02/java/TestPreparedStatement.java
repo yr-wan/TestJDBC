@@ -1,49 +1,54 @@
-package com.yrwan01.java;
+package com.yrwan02.java;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.junit.Test;
 
-public class TestStatement {
-
-	/**
-	 * 通过jdbc向数据表中插入记录
-	 * 
-	 * @throws Exception
-	 */
+/**
+ * 与Statement相比，提高了可读性、性能，并且可以防止SQL注入
+ * 
+ * @author Wyran
+ *
+ */
+public class TestPreparedStatement {
 	@Test
-	public void testStatement() {
-		// 获取数据库连接
+	public void preparedStatement() {
 		Connection con = null;
-		Statement s = null;
+		PreparedStatement ps = null;
 		try {
 			String driver = "oracle.jdbc.driver.OracleDriver";
 			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 			String user = "scott";
 			String password = "tiger";
+			String sql = "INSERT INTO examstudent(FlowID, Type, IDCard, " + "ExamCard, StudentName, Location, Grade) "
+					+ "VALUES(?,?,?,?,?,?,?)";
+
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, user, password);
-			// 准备插入的SQL语句
-			String sql = "insert into testjdbc values (1,'AA','aa@163.com',to_date('1999-01-01','yyyy-mm-dd'))";
-			// 获取statement对象
-			s = con.createStatement();
-			// 调用executeUpdate(sql)方法执行插入
-			s.executeUpdate(sql);
+			ps = con.prepareStatement(sql);
+
+			ps.setInt(1, 66);
+			ps.setInt(2, 6);
+			ps.setString(3, "123456");
+			ps.setString(4, "987654321");
+			ps.setString(5, "Tom");
+			ps.setString(6, "BeiJing");
+			ps.setInt(7, 99);
+
+			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			// 关闭Statement对象
-			if (s != null) {
+			if (ps != null) {
 				try {
-					s.close();
+					ps.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			// 关闭Connection
 			if (con != null) {
 				try {
 					con.close();
