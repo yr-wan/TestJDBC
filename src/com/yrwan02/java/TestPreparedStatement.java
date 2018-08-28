@@ -39,6 +39,8 @@ public class TestPreparedStatement {
 			ps.setInt(7, 99);
 
 			ps.executeUpdate();
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
