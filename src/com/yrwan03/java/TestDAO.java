@@ -32,7 +32,6 @@ public class TestDAO {
 			for (int i = 0; i < args.length; i++) {
 				ps.setObject(i + 1, args[i]);
 			}
-
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,16 +82,15 @@ public class TestDAO {
 					Object value = rs.getObject(i + 1);
 					values.put(label, value);
 				}
-				
+
 				entity = clazz.newInstance();
-				
+
 				for (Map.Entry<String, Object> entry : values.entrySet()) {
 					String name = entry.getKey();
 					Object value = entry.getValue();
 					ReflectionUtils.setFieldValue(entity, name, value);
 				}
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -118,8 +116,6 @@ public class TestDAO {
 				}
 			}
 		}
-
 		return entity;
 	}
-
 }
