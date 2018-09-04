@@ -5,9 +5,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
 import org.junit.Test;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 /**
  * 数据库连接池
@@ -16,6 +20,34 @@ import org.junit.Test;
  *
  */
 public class TestDataSource {
+	/**
+	 * 1.创建c3p0-config.xml文件
+	 * 2.创建ComboPooledDataSource实例
+	 * 3.获取连接
+	 * @throws Exception
+	 */
+	@Test
+	public void testC3P0WithConfig() throws Exception {
+		DataSource ds = new ComboPooledDataSource("helloc3p0");
+		System.out.println(ds.getConnection());
+	}
+	
+	/**
+	 * C3P0数据源连接测试
+	 * @throws Exception
+	 */
+	@Test
+	public void testC3P0() throws Exception {
+		ComboPooledDataSource cpds = new ComboPooledDataSource();
+		cpds.setDriverClass("com.mysql.cj.jdbc.Driver");
+		cpds.setJdbcUrl("jdbc:mysql://localhost:3306/save_music?useSSL=false&serverTimezone=UTC");
+		cpds.setUser("root");
+		cpds.setPassword("tiger");
+		System.out.println(cpds.getConnection());
+	}
+	
+	//--------------------------------------------------------------
+	
 	/**
 	 * 加载properties文件实现数据库连接池
 	 * 调用BasicDataSourceFactory 的createDataSource方法创建BasicDataSource实例
@@ -63,7 +95,7 @@ public class TestDataSource {
 			// 指定数据源的可选属性
 			bds.setInitialSize(10);// 初始化连接数:连接池启动时创建的初始化连接数量
 			bds.setMaxTotal(50);// 最大活动连接:连接池在同一时间能够分配的最大活动连接的数量
-			bds.setMinIdle(5);// 最小的空闲链接数量:连接池中容许保持空闲状态的最小连接数量,低于这个数量将创建新的连接
+			bds.setMinIdle(5);// 最小的空闲连接数量:连接池中容许保持空闲状态的最小连接数量,低于这个数量将创建新的连接
 			bds.setMaxWaitMillis(5000);// 最大等待时间:当没有可用连接时,连接池等待连接被归还的最大时间,超过时间则抛出异常
 
 			// 从数据源获取连接
