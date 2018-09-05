@@ -44,6 +44,7 @@ public class TestDataSource {
 		cpds.setUser("root");
 		cpds.setPassword("tiger");
 		System.out.println(cpds.getConnection());
+		
 	}
 	
 	//--------------------------------------------------------------
